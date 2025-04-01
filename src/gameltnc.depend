@@ -1,0 +1,57 @@
+# depslib dependency file v1.0
+1742315619 source:d:\ltnc\game\gameltnc_official\src\background.cpp
+	"Background.h"
+
+1742315660 d:\ltnc\game\gameltnc_official\src\background.h
+	"Object.h"
+
+1741802306 d:\ltnc\game\gameltnc_official\src\object.h
+	"TextureManager.h"
+
+1741799518 d:\ltnc\game\gameltnc_official\src\texturemanager.h
+	<SDL.h>
+	<SDL_image.h>
+
+1743519580 source:d:\ltnc\game\gameltnc_official\src\main.cpp
+	"GameLoop.h"
+	"Obstacle.h"
+
+1743521200 d:\ltnc\game\gameltnc_official\src\gameloop.h
+	<SDL.h>
+	<SDL_image.h>
+	<iostream>
+	<SDL_mixer.h>
+	"Player.h"
+	"Background.h"
+	"Obstacle.h"
+
+1743520778 d:\ltnc\game\gameltnc_official\src\player.h
+	"Object.h"
+	<iostream>
+	<vector>
+
+1743521890 source:d:\ltnc\game\gameltnc_official\src\player.cpp
+	"Player.h"
+	"TextureManager.h"
+	<iostream>
+
+1741799540 source:d:\ltnc\game\gameltnc_official\src\texturemanager.cpp
+	"TextureManager.h"
+
+1741802336 source:d:\ltnc\game\gameltnc_official\src\object.cpp
+	"Object.h"
+
+1743522091 source:d:\ltnc\game\gameltnc_official\src\gameloop.cpp
+	"GameLoop.h"
+	<iostream>
+
+1742664718 source:d:\ltnc\game\gameltnc_official\src\obstacle.cpp
+	"Obstacle.h"
+	<cstdlib>
+	<ctime>
+	"GameLoop.h"
+
+1743094564 d:\ltnc\game\gameltnc_official\src\obstacle.h
+	<SDL.h>
+	<SDL_image.h>
+

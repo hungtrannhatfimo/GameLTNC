@@ -1,0 +1,36 @@
+1. khi them file cpp thi project -> add file
+
+
+cac step
+1. Add the Bird Character
+- Load and display the bird sprite.
+- Set the bird’s initial position on the screen.
+
+2. Implement Gravity and Jump Mechanics
+- Make the bird fall naturally due to gravity.
+- Allow the bird to jump when a key is pressed.
+
+3. Create Pipes as Obstacles
+- Load and display pipe sprites.
+- Randomly generate pipe heights and positions.
+- Move pipes from right to left across the screen.
+
+4. Implement Collision Detection
+- Check if the bird collides with pipes.
+- Detect if the bird touches the ground or flies out of bounds.
+
+5. Add Scoring System
+- Increase the score when the bird successfully passes a pipe.
+- Display the score on the screen.
+
+6. Handle Game Over and Restart
+- Stop movement and show a game-over screen when the bird collides.
+- Implement a way to restart the game.
+
+7. Enhance with Animations and Effects
+- Add bird flapping animation.
+- Implement smooth transitions and UI effects.
+
+8. Optimize and Debug
+- Ensure smooth performance and fix bugs.
+- Adjust game difficulty (e.g., pipe speed, gap size).
