@@ -19,15 +19,15 @@ void Player::Render(SDL_Renderer* ren)
 //	SDL_RenderCopyEx(ren, texture, &srcRect, &destRect, 0 , nullptr, SDL_FLIP_NONE);
 	if (animationTimer < 16)
 	{
-		SDL_RenderCopyEx(ren, getTexture(), &getSrc(), &getDest(), 0, NULL, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(ren, getTexture(), &getSrc(), &getDest(), 0, nullptr, SDL_FLIP_NONE);
 	}
 	else if (animationTimer >= 16 && animationTimer <= 32)
 	{
-		SDL_RenderCopyEx(ren, Tex1, &getSrc(), &getDest(), 0, NULL, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(ren, Tex1, &getSrc(), &getDest(), 0, nullptr, SDL_FLIP_NONE);
 	}
 	else if (animationTimer > 32)
 	{
-		SDL_RenderCopyEx(ren, Tex2, &getSrc(), &getDest(), 0, NULL, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(ren, Tex2, &getSrc(), &getDest(), 0, nullptr, SDL_FLIP_NONE);
 	}
 	if (animationTimer > 48)
 	{

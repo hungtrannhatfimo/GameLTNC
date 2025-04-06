@@ -22,8 +22,11 @@ private:
     bool GameState = false;
     Obstacle pipe1;
     Obstacle pipe2;
-
+void loadDigitTextures(); // Loads number textures
+    void renderScore(int x, int y); // Displays score on screen
 public:
+    bool isPaused = false;
+void ShowMenu();
     static int highestScore;
     static bool gameStarted;
     static int score;
@@ -36,7 +39,6 @@ bool getGameState();
     void Clear();
     void checkCollision();
 
-private:
-    void loadDigitTextures(); // Loads number textures
-    void renderScore(int x, int y); // Displays score on screen
+
+
 };

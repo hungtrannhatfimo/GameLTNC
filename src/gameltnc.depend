@@ -55,3 +55,115 @@
 	<SDL.h>
 	<SDL_image.h>
 
+1743605561 source:d:\ltnc\game\gameltnc\src\background.cpp
+	"Background.h"
+
+1743605561 d:\ltnc\game\gameltnc\src\background.h
+	"Object.h"
+
+1743605561 d:\ltnc\game\gameltnc\src\object.h
+	"TextureManager.h"
+
+1743605561 d:\ltnc\game\gameltnc\src\texturemanager.h
+	<SDL.h>
+	<SDL_image.h>
+
+1743605561 source:d:\ltnc\game\gameltnc\src\gameloop.cpp
+	"GameLoop.h"
+	<iostream>
+
+1743608453 d:\ltnc\game\gameltnc\src\gameloop.h
+	<SDL.h>
+	<SDL_image.h>
+	<iostream>
+	<SDL_mixer.h>
+	"Player.h"
+	"Background.h"
+	"Obstacle.h"
+
+1743605561 d:\ltnc\game\gameltnc\src\player.h
+	"Object.h"
+	<iostream>
+	<vector>
+
+1743605561 d:\ltnc\game\gameltnc\src\obstacle.h
+	<SDL.h>
+	<SDL_image.h>
+
+1743605561 source:d:\ltnc\game\gameltnc\src\main.cpp
+	"GameLoop.h"
+	"Obstacle.h"
+
+1743605561 source:d:\ltnc\game\gameltnc\src\object.cpp
+	"Object.h"
+
+1743605561 source:d:\ltnc\game\gameltnc\src\obstacle.cpp
+	"Obstacle.h"
+	<cstdlib>
+	<ctime>
+	"GameLoop.h"
+
+1743605561 source:d:\ltnc\game\gameltnc\src\player.cpp
+	"Player.h"
+	"TextureManager.h"
+	<iostream>
+
+1743605561 source:d:\ltnc\game\gameltnc\src\texturemanager.cpp
+	"TextureManager.h"
+
+1743605561 source:d:\ltnc\game\gameltnc(working)\src\background.cpp
+	"Background.h"
+
+1743605561 d:\ltnc\game\gameltnc(working)\src\background.h
+	"Object.h"
+
+1743605561 d:\ltnc\game\gameltnc(working)\src\object.h
+	"TextureManager.h"
+
+1743605561 d:\ltnc\game\gameltnc(working)\src\texturemanager.h
+	<SDL.h>
+	<SDL_image.h>
+
+1743605561 source:d:\ltnc\game\gameltnc(working)\src\main.cpp
+	"GameLoop.h"
+	"Obstacle.h"
+
+1743694934 d:\ltnc\game\gameltnc(working)\src\gameloop.h
+	<SDL.h>
+	<SDL_image.h>
+	<iostream>
+	<SDL_mixer.h>
+	"Player.h"
+	"Background.h"
+	"Obstacle.h"
+
+1743605561 d:\ltnc\game\gameltnc(working)\src\player.h
+	"Object.h"
+	<iostream>
+	<vector>
+
+1743605561 d:\ltnc\game\gameltnc(working)\src\obstacle.h
+	<SDL.h>
+	<SDL_image.h>
+
+1743605561 source:d:\ltnc\game\gameltnc(working)\src\object.cpp
+	"Object.h"
+
+1743605561 source:d:\ltnc\game\gameltnc(working)\src\obstacle.cpp
+	"Obstacle.h"
+	<cstdlib>
+	<ctime>
+	"GameLoop.h"
+
+1743693091 source:d:\ltnc\game\gameltnc(working)\src\player.cpp
+	"Player.h"
+	"TextureManager.h"
+	<iostream>
+
+1743605561 source:d:\ltnc\game\gameltnc(working)\src\texturemanager.cpp
+	"TextureManager.h"
+
+1743697550 source:d:\ltnc\game\gameltnc(working)\src\gameloop.cpp
+	"GameLoop.h"
+	<iostream>
+
