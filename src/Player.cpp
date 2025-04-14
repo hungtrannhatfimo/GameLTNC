@@ -1,5 +1,7 @@
 #include "Player.h"
 #include"TextureManager.h"
+#define HEIGHT 600
+#define WIDTH 800
 #include<iostream>
 // Inside Player class
 
@@ -33,6 +35,20 @@ void Player::Render(SDL_Renderer* ren)
 	{
 		animationTimer = 0;
 	}
+}
+
+void Player::reset() {
+    setSrc(0, 0, 24, 32);
+    setDest(25, HEIGHT / 2, 28, 38);
+        inJump = false;
+    accelerator1 = 0;
+    accelerator2 = 0;
+    jumpHeight = -6;
+    Ypos = HEIGHT / 2;   // match Ypos to center of screen
+    jumpTimer = 0;
+    lastJump = 0;
+    animationTimer = 0;  // optional: reset animation too
+
 }
 
 void Player::Gravity()

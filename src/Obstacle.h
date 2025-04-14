@@ -19,7 +19,7 @@ public:
     // ✅ Make sure this is in the public section
     Obstacle(int startX);
 
-    void reset();
+    void reset(int startX);
     void update();
     void render(SDL_Renderer* renderer);
     SDL_Rect getUpperRect();

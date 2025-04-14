@@ -10,11 +10,11 @@ const int Obstacle::PIPE_SPEED = 3;
 
 Obstacle::Obstacle(int startX) {
     x = startX;
-    reset();
+    reset(x);
 }
 
-void Obstacle::reset() {
-
+void Obstacle::reset(int startX) {
+x = startX;
     const int screen_height = 600;
     const int ground_height = 190;
 
@@ -45,7 +45,7 @@ void Obstacle::update() {
 
     if (x + PIPE_WIDTH < 0) { // If off-screen, reset position
         x = 800;
-        reset();
+        reset(x);
     }
 }
 
