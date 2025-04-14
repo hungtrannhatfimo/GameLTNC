@@ -11,6 +11,9 @@
 class GameLoop
 {
 private:
+
+
+
         Mix_Chunk* flapSound = nullptr;
     Mix_Chunk* hitSound = nullptr;
 

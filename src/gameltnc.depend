@@ -124,11 +124,11 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1743605561 source:d:\ltnc\game\gameltnc(working)\src\main.cpp
+1744645220 source:d:\ltnc\game\gameltnc(working)\src\main.cpp
 	"GameLoop.h"
 	"Obstacle.h"
 
-1744619450 d:\ltnc\game\gameltnc(working)\src\gameloop.h
+1744645220 d:\ltnc\game\gameltnc(working)\src\gameloop.h
 	<SDL.h>
 	<SDL_image.h>
 	<iostream>
@@ -164,10 +164,12 @@
 1743605561 source:d:\ltnc\game\gameltnc(working)\src\texturemanager.cpp
 	"TextureManager.h"
 
-1744613492 source:d:\ltnc\game\gameltnc(working)\src\gameloop.cpp
+1744650186 source:d:\ltnc\game\gameltnc(working)\src\gameloop.cpp
 	"GameLoop.h"
 	"Obstacle.h"
 	<iostream>
+	<SDL_ttf.h>
+	<fstream>
 
 1743954048 source:d:\ltnc\game\gameltnc(working)\src\button.cpp
 	"Button.h"

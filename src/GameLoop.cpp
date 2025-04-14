@@ -2,9 +2,27 @@
 #include"Obstacle.h"
 #include <iostream>
 #include<SDL_ttf.h>
-#define SCREEN_HEIGHT 600
+#define HEIGHT 600
+#define WIDTH 800
 #define GROUND_HEIGHT 190
+#include <fstream>
 using namespace std;
+
+TTF_Font* menuFont = nullptr;
+SDL_Texture* startTextTex = nullptr;
+//SDL_Texture* pointsTextTex = nullptr;
+SDL_Rect startButtonRect = {300, 200, 200, 60};
+//SDL_Rect pointsButtonRect = {300, 280, 200, 60};
+//bool showPointsScreen = false;
+//SDL_Texture* pointsTexture = nullptr;
+
+
+
+
+
+//TTF_Init();
+//TTF_Font* font = TTF_OpenFont("assets/font.ttf", 36);
+
 
 //sound and music
 void GameLoop::InitSounds(SDL_Renderer* renderer) {
@@ -22,6 +40,19 @@ void GameLoop::InitSounds(SDL_Renderer* renderer) {
     soundOffTex = TextureManager::Texture("Image/soundoff.png", renderer);
 
 }
+
+
+    void saveScore(int score)
+{
+    std::ofstream file("score.txt", std::ios::app);
+
+    if (file.is_open()) {
+        file << score << "\n"; // Save each score on a new line
+        file.close();
+    }
+}
+
+
 
 void GameLoop::PlayFlapSound() {
     if (!isMuted)
@@ -83,7 +114,8 @@ void GameLoop::ResetGame() {
         score = 0;
     isPaused = false;
     isGameOver = false;
-    gameStarted = false;
+    gameStarted = true;
+//    showPointsScreen = false;
 }
 
 
@@ -144,7 +176,7 @@ void GameLoop::checkCollision() {
 
     }
 
-    if (birdRect.y + birdRect.h >= SCREEN_HEIGHT - GROUND_HEIGHT) {
+    if (birdRect.y + birdRect.h >= HEIGHT - GROUND_HEIGHT) {
         cout << "Game Over! Bird hit the ground." << endl;
          isGameOver = true;
     gameStarted = false;
@@ -158,6 +190,9 @@ void GameLoop::checkCollision() {
     gameStarted = false;
         if (!isMuted) Mix_PlayChannel(-1, hitSound, 0);
 
+    }
+    if(isGameOver==true){
+saveScore(score);
     }
 
     // Increase score when the bird passes a pipe
@@ -173,6 +208,12 @@ void GameLoop::checkCollision() {
 
 
 void GameLoop::Initialize() {
+
+    if (TTF_Init() == -1) {
+    std::cout << "TTF_Init Error: " << TTF_GetError() << std::endl;
+}
+
+
     SDL_Init(SDL_INIT_EVERYTHING);
     window = SDL_CreateWindow("My Flappy Doms", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
 
@@ -185,6 +226,29 @@ void GameLoop::Initialize() {
             GameState = true;
             gameStarted = false;  // Ensure the game starts in the menu
             isPaused = false;
+
+        menuFont = TTF_OpenFont("GIGI.ttf", 28);
+    if (!menuFont) {
+        std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
+    }
+
+    SDL_Color black = {0,0,0};
+    SDL_Surface* startSurface = TTF_RenderText_Solid(menuFont, "Start", black);
+//    SDL_Surface* pointsSurface = TTF_RenderText_Solid(menuFont, "Points", black);
+
+    startTextTex = SDL_CreateTextureFromSurface(renderer, startSurface);
+//    pointsTextTex = SDL_CreateTextureFromSurface(renderer, pointsSurface);
+
+    SDL_FreeSurface(startSurface);
+//    SDL_FreeSurface(pointsSurface);
+
+    startButtonRect = {300,200,200,60};
+//    pointsButtonRect = {300,280,200,60};
+
+
+
+
+
 InitSounds(renderer);
 //   SDL_Surface* tempSurface = IMG_Load("Image/start_button.png");
 //
@@ -251,77 +315,64 @@ void GameLoop::Event() {
         GameState = false;
     }
 
-        if (event1.type == SDL_KEYDOWN) {                                // press p to pause
+    // Pause and resume game logic
+    if (event1.type == SDL_KEYDOWN) {
         if (event1.key.keysym.sym == SDLK_p) {
             isPaused = !isPaused;  // Toggle pause state
             cout << "Game " << (isPaused ? "Paused" : "Resumed") << endl;
         }
     }
 
+    // Handling jumps and starting the game
+    if (!isPaused) {
+        if (event1.type == SDL_MOUSEBUTTONDOWN || event1.type == SDL_KEYDOWN) {
+            if (event1.key.keysym.sym == SDLK_UP || event1.button.button == SDL_BUTTON_LEFT || event1.key.keysym.sym == SDLK_SPACE) {
+                PlayFlapSound();
 
-    if(!isPaused){
-    if (event1.type == SDL_MOUSEBUTTONDOWN || event1.type == SDL_KEYDOWN) {
-        if (event1.key.keysym.sym == SDLK_UP || event1.button.button == SDL_BUTTON_LEFT || event1.key.keysym.sym == SDLK_SPACE) {
- PlayFlapSound();
-
-            if (!p.JumpState()) {
-                gameStarted = true;
-                p.Jump();
+                if (!p.JumpState()) {
+                    gameStarted = true;
+                    p.Jump();
+                }
             }
+        } else if (event1.key.keysym.sym == SDLK_s) {
+            ToggleSound();
         }
     }
-    else if (event1.key.keysym.sym == SDLK_s) {
-        ToggleSound();
-    }
-    }
 
-//if (!isPaused && !isGameOver) {
-//    if (event1.type == SDL_MOUSEBUTTONDOWN || event1.type == SDL_KEYDOWN) {
-//        if (event1.key.keysym.sym == SDLK_UP || event1.button.button == SDL_BUTTON_LEFT || event1.key.keysym.sym == SDLK_SPACE) {
-//            if (!gameStarted) {
-//                gameStarted = true;  // start game on first jump
-//                p.Jump();
-//            } else if (!p.JumpState()) {
-//                p.Jump();
-//            }
-//        }
-//    }
-//}
-
-
-
-        if (isPaused && (event1.type == SDL_MOUSEBUTTONDOWN || event1.type == SDL_KEYDOWN)) {
+    // Unpause the game when it is paused
+    if (isPaused && (event1.type == SDL_MOUSEBUTTONDOWN || event1.type == SDL_KEYDOWN)) {
         if (event1.key.keysym.sym == SDLK_UP || event1.button.button == SDL_BUTTON_LEFT || event1.key.keysym.sym == SDLK_SPACE) {
             isPaused = false; // Unpause the game
             cout << "Game Resumed" << endl;
         }
     }
 
-
+    // Game logic when game has started
     if (gameStarted && !isPaused) {
         p.Gravity();
     }
 
+    // Handle the game over state
     if (isGameOver) {
+        if (event1.type == SDL_MOUSEBUTTONDOWN) {
+            int x = event1.button.x;
+            int y = event1.button.y;
 
-    if (event1.type == SDL_MOUSEBUTTONDOWN) {
-        int x = event1.button.x;
-        int y = event1.button.y;
-        if (x >= restartButtonRect.x && x <= restartButtonRect.x + restartButtonRect.w &&
-            y >= restartButtonRect.y && y <= restartButtonRect.y + restartButtonRect.h) {
-            // Restart game
-            ResetGame();  // implement this below
-//            isGameOver = false;       // Reset game over flag
-//            gameStarted = true;       //not Allow game to play again yet
-//            score = 0;                // Reset score
+            // Restart button logic
+            if (x >= restartButtonRect.x && x <= restartButtonRect.x + restartButtonRect.w &&
+                y >= restartButtonRect.y && y <= restartButtonRect.y + restartButtonRect.h) {
+                // Restart game
+                ResetGame();  // implement this below
+            }
+
+            // Points button logic
+
         }
+
+        return; // Skip further event handling when game over
     }
-    return; // Skip other events when game over
 }
 
-
-
-}
 
 void GameLoop::Update() {
     if(isGameOver)return;
@@ -333,7 +384,10 @@ void GameLoop::Update() {
 
 }
 
+
 void GameLoop::renderGameOverScreen() {
+
+
     if (!gameOverTexture) return;
 
     SDL_Rect dstRect = {
@@ -347,41 +401,90 @@ void GameLoop::renderGameOverScreen() {
 
     // ✅ Draw restart button below game over
     SDL_RenderCopy(renderer, restartButtonTexture, nullptr, &restartButtonRect);
+
+
+
 }
 
 
 
 
+
+    // Only clear if game is running
+//    if (gameStarted && !isGameOver && !showPointsScreen) {
+//        SDL_SetRenderDrawColor(renderer, 100, 149, 237, 255); // Blue background
+//        SDL_RenderClear(renderer);
+//    }
+//
+//    // 🎮 START MENU
+//    if (!gameStarted && !isGameOver) {
+//        SDL_RenderCopy(renderer, startTextTex, nullptr, &startButtonRect);
+//        SDL_RenderCopy(renderer, pointsTextTex, nullptr, &pointsButtonRect);
+//
+//        // 📝 POINTS SCREEN OVERLAY (on top of menu)
+//        if (showPointsScreen) {
+//            SDL_Rect popupRect = {100, 100, 600, 400};
+//            SDL_SetRenderDrawColor(renderer, 30, 30, 30, 220);
+//            SDL_RenderFillRect(renderer, &popupRect);
+//
+//            std::ifstream file("score.txt");
+//            std::string line;
+//            int y = 120;
+//            SDL_Color color = {255, 255, 255};
+//
+//            if (file.is_open()) {
+//                while (getline(file, line)) {
+//                    SDL_Surface* textSurface = TTF_RenderText_Solid(menuFont, line.c_str(), color);
+//                    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+//                    SDL_Rect textRect = {120, y, 400, 30};
+//                    if (y >= 100 && y < 500)  // only render visible
+//                        SDL_RenderCopy(renderer, textTexture, nullptr, &textRect);
+//                    SDL_FreeSurface(textSurface);
+//                    SDL_DestroyTexture(textTexture);
+//                    y += 35;
+//                }
+//                file.close();
+//            }
+//        }
+//
+//            SDL_RenderPresent(renderer);
+//
+//return;
+//    }
 void GameLoop::Render() {
+SDL_RenderClear(renderer);
+
+    // ✅ GAME RENDERING
+    // Order: background → pipes → ground → bird → UI
+    b.Render(renderer);                 // Bird
+    pipe1.render(renderer);            // Pipe 1
+    pipe2.render(renderer);            // Pipe 2
+    ground1.GroundRender(renderer);    // Ground
+    p.Render(renderer);                // Player or another object
+    renderScore(700, 50);             // Score
+    RenderSoundIcon(renderer);        // Sound toggle icon
+
+     if (isGameOver) {
+        renderGameOverScreen();    // Show game over text + restart button
+    }
 
 
 
-//       if (gameStarted && !isPaused) {
-        // ✅ Do NOT clear the renderer → Keeps previous game state visible
+    // ✅ Show menu only before the game starts
+    if (!gameStarted && !isGameOver) {
 
-        SDL_RenderClear(renderer); // Clear only when game is running
-//    }
+        SDL_RenderCopy(renderer, startTextTex, nullptr, &startButtonRect);
+    }
 
-    // ✅ Normal game rendering when playing
-        b.Render(renderer);
-        pipe1.render(renderer);
-        pipe2.render(renderer);
-        ground1.GroundRender(renderer);
-        p.Render(renderer);
-        renderScore(700, 50);
-RenderSoundIcon(renderer);
-
-
-//if (!gameStarted || isPaused){
-//    ShowMenu();
-//    }
-if (isGameOver) {
-    renderGameOverScreen();
-}
     SDL_RenderPresent(renderer);
 }
 
+
 void GameLoop::Clear() {
+
+
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+        TTF_CloseFont(menuFont);
+
 }
