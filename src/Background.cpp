@@ -3,7 +3,7 @@
 
 void Background::Render(SDL_Renderer* ren)
 {
-	SDL_RenderCopy(ren, getTexture(), NULL, NULL);
+	SDL_RenderCopy(ren, getTexture(), nullptr, nullptr);
 }
 
 void Background::GroundRender(SDL_Renderer* ren)

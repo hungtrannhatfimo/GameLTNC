@@ -4,7 +4,6 @@ GameLoop* g = new GameLoop();
 
 int main(int argc, char** argv)
 {
-     // Display at top-right
 
 	double first;
 	double last = 0;

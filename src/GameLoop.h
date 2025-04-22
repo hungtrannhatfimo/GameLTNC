@@ -12,9 +12,7 @@ class GameLoop
 {
 private:
 
-
-
-        Mix_Chunk* flapSound = nullptr;
+    Mix_Chunk* flapSound = nullptr;
     Mix_Chunk* hitSound = nullptr;
 
     SDL_Texture* soundOnTex = nullptr;
@@ -34,11 +32,11 @@ private:
     bool GameState = false;
     Obstacle pipe1;
     Obstacle pipe2;
-void loadDigitTextures(); // Loads number textures
-    void renderScore(int x, int y); // Displays score on screen
+void loadDigitTextures();
+    void renderScore(int x, int y);
 public:
 
-        void InitSounds(SDL_Renderer* renderer);
+    void InitSounds(SDL_Renderer* renderer);
     void PlayFlapSound();
     void PlayHitSound();
     void ToggleSound();
@@ -49,7 +47,6 @@ public:
     void renderGameOverScreen();
     bool isPaused = false;
     void ResetGame();
-//void ShowMenu();
     static int highestScore;
     static bool gameStarted;
     static int score;

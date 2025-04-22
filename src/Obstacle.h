@@ -10,13 +10,13 @@ private:
     SDL_Rect lowerPipeRect;
 
 public:
-    bool passed;   //
-
+    bool passed;
+SDL_Texture* pipeTexture = nullptr;
+void loadTexture(SDL_Renderer* renderer);
     static const int PIPE_WIDTH;
     static const int PIPE_GAP;
     static const int PIPE_SPEED;
 
-    // ✅ Make sure this is in the public section
     Obstacle(int startX);
 
     void reset(int startX);
