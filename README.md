@@ -29,18 +29,50 @@
  Code được tổ chức tốt, dễ mở rộng (tách class, dùng reset(), update()…)</br>
 
 (3.2) Thuật toán & kỹ thuật đã sử dụng:  </br>
-Sử dụng SDL_GetTicks() để xử lý cooldown nhảy</br>
 
-Tạo animation thủ công với animationTimer</br>
+### Thuật toán để chim bay:
+- reset()</br>
+**Chức năng:**</br>
+Đặt lại toàn bộ trạng thái chim khi bắt đầu game hoặc chơi lại.</br>
+**Thiết lập:**</br>
+Gán lại vị trí bắt đầu: Ypos = HEIGHT / 3.</br>
+Đặt tốc độ bay jumpHeight = -6.</br>
+Gia tốc ban đầu accelerator1 = 0, accelerator2 = 0.</br>
+Tắt trạng thái bay inJump = false.</br>
+Vị trí hiển thị setDest(...) được đặt lại tương ứng.</br>
 
-Sử dụng 2 cấp độ gia tốc để mô phỏng trọng lực thực tế</br>
+- Gravity()</br>
+**Chức năng:**</br>
+Cập nhật vị trí Y của chim, xử lý rơi hoặc bay theo vật lý đơn giản.</br>
+**Khi chim đang bay (inJump == true):**</br>
+jumpHeight += gravity;</br>
+Ypos += gravity + accelerator1 + accelerator2 + jumpHeight;</br>
+gravity (ví dụ = 0.4) luôn đẩy chim xuống.</br>
+jumpHeight ban đầu là âm (-6), tạo lực đẩy lên (nhảy).</br>
+Mỗi frame, jumpHeight tăng dần về 0 → chim chậm lại rồi bắt đầu rơi.</br>
+Khi jumpHeight > 0, chim hết lực nhảy → chuyển sang rơi (inJump = false).</br>
+Khi chim không bay:</br>
+Ypos += gravity + accelerator1 + accelerator2;</br>
+Rơi nhanh dần do tích lũy gia tốc (accelerator1, accelerator2), tạo cảm giác chim nặng dần.</br>
 
-Kết hợp rand() để tạo khoảng cách ngẫu nhiên giữa các ống</br>
+- Jump()</br>
+**Chức năng:**</br>
+Xử lý nhảy khi người chơi nhấn phím.</br>
+**Chi tiết**</br>
+if (jumpTimer - lastJump > 180) </br>
+Mỗi lần nhảy cách nhau ít nhất 180ms.</br>
+Nếu đủ thời gian:</br>
+Đặt lại gia tốc về 0.</br>
+Bật inJump = true.</br>
+Lưu thời điểm nhảy (lastJump).</br>
+Nếu không đủ thời gian → tiếp tục rơi theo Gravity(). </br>
 
-Cập nhật UI theo trạng thái (gameStarted, isGameOver, showPointsScreen)</br>
+### Thuật toán các cột chạy
+- Các cột độ dài từ 0 tới 260.
+- Chạy với tốc độ 3px/frame.
 
-Đọc file score.txt và render text bằng TTF</br>
-- Mức độ sử dụng AI:
- Em tìm hiểu và viết các hàm các chức năng. Những phần em viết chưa đúng em có sử dụng AI để sửa và hiểu phần đó. 
+### Thuật toán va chạm
+- Xử lý trường hợp chim bay lên nóc, chạm base, chạm các cột bằng cách so sánh tọa độ chim với tọa độ các thành phần khác như cột trên, cột dưới. Với base và top, so sánh đơn thuần tọa độ chứ ko dùng hàm SDL_HasIntersection().
+
 # Nguồn tham khảo: https://www.youtube.com/@askarihassan2632/playlists, https://github.com/Zyb0rg/SDL-Tutorial.git.</br>
 # Link video demo: https://youtu.be/zXc9lygLH8A </br>
