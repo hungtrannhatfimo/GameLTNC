@@ -3,8 +3,7 @@
 #define HEIGHT 600
 #define WIDTH 800
 #include<iostream>
-// Inside Player class
-
+using namespace std;
 
 void Player::Render(SDL_Renderer* ren)
 {
@@ -12,15 +11,15 @@ void Player::Render(SDL_Renderer* ren)
 
 	if (animationTimer < 16)
 	{
-		SDL_RenderCopyEx(ren, getTexture(), &getSrc(), &getDest(), 0, nullptr, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(ren, getTexture(), &getSrc(), &getDest(), 0, nullptr, SDL_FLIP_NONE);  // anh 1
 	}
 	else if (animationTimer >= 16 && animationTimer <= 32)
 	{
-		SDL_RenderCopyEx(ren, Tex1, &getSrc(), &getDest(), 0, nullptr, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(ren, Tex1, &getSrc(), &getDest(), 0, nullptr, SDL_FLIP_NONE); //anh 2
 	}
 	else if (animationTimer > 32)
 	{
-		SDL_RenderCopyEx(ren, Tex2, &getSrc(), &getDest(), 0, nullptr, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(ren, Tex2, &getSrc(), &getDest(), 0, nullptr, SDL_FLIP_NONE); //anh 3
 	}
 	if (animationTimer > 48)
 	{
@@ -29,16 +28,16 @@ void Player::Render(SDL_Renderer* ren)
 }
 
 void Player::reset() {
-    setSrc(0, 0, 24, 32);
-    setDest(25, HEIGHT / 3, 28, 38);
+    setSrc(0, 0, 32,24 );  // con chim lay ra tu anh
+    setDest(25, HEIGHT / 3, 38,28 );  // con chim hien trong game
         inJump = false;
     accelerator1 = 0;
     accelerator2 = 0;
     jumpHeight = -6;
-    Ypos = HEIGHT / 3;   // match Ypos to center of screen
+    Ypos = HEIGHT / 3;
     jumpTimer = 0;
     lastJump = 0;
-    animationTimer = 0;  // optional: reset animation too
+    animationTimer = 0;
 
 }
 
@@ -50,7 +49,7 @@ void Player::Gravity()
 		accelerator2 = accelerator2 + 0.035;
 		jumpHeight = jumpHeight + gravity;
 		Ypos = Ypos + gravity + accelerator1 + accelerator2 + jumpHeight;
-		setDest(25, Ypos, 28, 38);
+		setDest(25, Ypos,38 , 28);
 		if (jumpHeight > 0)
 		{
 			inJump = false;
@@ -63,8 +62,9 @@ void Player::Gravity()
 		accelerator1 = accelerator1 + 0.035;
 		accelerator2 = accelerator2 + 0.035;
 		Ypos = Ypos + gravity + accelerator1 + accelerator2;
-		setDest(25, Ypos, 28, 38);
+		setDest(25, Ypos, 38, 28);
 	}
+//	cerr << jumpHeight<< ", "<<Ypos<<endl;
 
 }
 

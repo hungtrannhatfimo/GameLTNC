@@ -6,11 +6,22 @@
 #define WIDTH 800
 #define GROUND_HEIGHT 180
 #include <fstream>
+#include <vector>
+#include<algorithm>
+#include<string>
+
+
 using namespace std;
+
+vector<SDL_Texture*>scoreTextures;
+vector<SDL_Rect> scoreRects;
 
 TTF_Font* menuFont = nullptr;
 SDL_Texture* startTextTex = nullptr;
 SDL_Rect startButtonRect = {300, 200, 200, 60};
+
+SDL_Texture* HighScoreTex = nullptr;
+SDL_Rect HighScoreRect = {600, 200, 200, 60};
 
 void GameLoop::InitSounds(SDL_Renderer* renderer) {
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
@@ -37,6 +48,55 @@ void GameLoop::InitSounds(SDL_Renderer* renderer) {
         file << score << "\n"; // Luu diem vao dong moi
         file.close();
     }
+}
+
+
+void loadTopScores(SDL_Renderer* renderer, TTF_Font* font, const string& filePath) {
+    SDL_Color black = {0, 0, 0};
+    scoreTextures.clear();
+    scoreRects.clear();
+
+    ifstream file(filePath);
+    vector<int> scores;
+    int score;
+
+    while (file >> score) {
+        scores.push_back(score);
+    }
+
+    sort(scores.begin(), scores.end(), greater<int>());
+    if (scores.size() > 5) {
+        scores.resize(5);
+   }
+
+    for (int i = 0; i < scores.size(); ++i) {
+        string text = to_string(scores[i]);
+        SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), black);
+        SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+        SDL_Rect rect = {520, 300 + i * 50, surface->w, 60};
+
+        scoreTextures.push_back(texture);
+        scoreRects.push_back(rect);
+
+        SDL_FreeSurface(surface);
+    }
+}
+
+
+void renderTopScores(SDL_Renderer* renderer) {
+    for (size_t i = 0; i < scoreTextures.size(); ++i) {
+        SDL_RenderCopy(renderer, scoreTextures[i], nullptr, &scoreRects[i]);
+    }
+}
+
+
+void freeTopScores() {
+    for (auto tex : scoreTextures) {
+        SDL_DestroyTexture(tex);
+    }
+    scoreTextures.clear();
+    scoreRects.clear();
 }
 
 
@@ -85,7 +145,7 @@ SDL_Surface* restartSurface = IMG_Load("Image/start_button.png");
 
 bool isGameOver = false;
 SDL_Texture* gameOverTexture = nullptr;
-SDL_Rect restartButtonRect = {WIDTH / 2 - 75, HEIGHT / 2 + 50, 150, 60};
+SDL_Rect restartButtonRect = {WIDTH / 2 - 75, HEIGHT / 2 -100, 150, 60};
 SDL_Texture* restartButtonTexture = nullptr;
 
 
@@ -93,8 +153,8 @@ void GameLoop::ResetGame() {
 
     p.reset();
 
-    ground1.setSrc(0, 0, GROUND_HEIGHT, WIDTH);
-    ground1.setDest(0, 420, GROUND_HEIGHT, WIDTH);
+    ground1.setSrc(0, 0, WIDTH, GROUND_HEIGHT);
+    ground1.setDest(0, 420, WIDTH, GROUND_HEIGHT);
     pipe1.reset(WIDTH);
     pipe2.reset(WIDTH + WIDTH/2);
         score = 0;
@@ -109,10 +169,10 @@ GameLoop::GameLoop() : pipe1(WIDTH), pipe2(WIDTH + WIDTH / 2) {
     renderer = nullptr;
     GameState = false;
 
-    p.setSrc(0, 0, 24, 32);
-    p.setDest(25, HEIGHT / 3, 28, 38);
-    ground1.setSrc(0, 0, GROUND_HEIGHT, WIDTH);
-    ground1.setDest(0, 420, GROUND_HEIGHT, WIDTH);
+    p.setSrc(0, 0, 32, 24);
+    p.setDest(25, HEIGHT / 3, 38,28 );
+    ground1.setSrc(0, 0, WIDTH, GROUND_HEIGHT);
+    ground1.setDest(0, 420, WIDTH ,GROUND_HEIGHT);
         soundIconRect = {750, 10, 32, 32};
 
 }
@@ -178,6 +238,7 @@ void GameLoop::checkCollision() {
     }
     if(isGameOver==true){
 saveScore(score);
+
     }
 
     // Increase score when the bird passes a pipe
@@ -218,14 +279,22 @@ void GameLoop::Initialize() {
     }
 
     SDL_Color black = {0,0,0};
-    SDL_Surface* startSurface = TTF_RenderText_Solid(menuFont, "Start", black);
+    SDL_Surface* startSurface = TTF_RenderText_Solid(menuFont, "START", black);
 
     startTextTex = SDL_CreateTextureFromSurface(renderer, startSurface);
 
+        SDL_Surface* highscoreSurface = TTF_RenderText_Solid(menuFont, "HIGH SCORE: ", black);
+
+HighScoreTex = SDL_CreateTextureFromSurface(renderer, highscoreSurface);
+loadTopScores(renderer, menuFont, "score.txt");
+
     SDL_FreeSurface(startSurface);
+    SDL_FreeSurface(highscoreSurface);
+
+
 
     startButtonRect = {300,200,200,60};
-
+HighScoreRect = {300, 300, 200, 60};
 InitSounds(renderer);
 
 
@@ -351,8 +420,8 @@ void GameLoop::renderGameOverScreen() {
     if (!gameOverTexture) return;
 
     SDL_Rect dstRect = {
-        WIDTH / 2 - 200 / 2,
-        HEIGHT / 2 - 100,
+        WIDTH / 2 -100,
+        HEIGHT / 2 -200,
         200,
         60
     };
@@ -360,8 +429,9 @@ void GameLoop::renderGameOverScreen() {
     SDL_RenderCopy(renderer, gameOverTexture, nullptr, &dstRect); // anh gameover
 
     SDL_RenderCopy(renderer, restartButtonTexture, nullptr, &restartButtonRect); // nut restart
+        SDL_RenderCopy(renderer, HighScoreTex, nullptr, &HighScoreRect);
 
-
+    renderTopScores(renderer);
 
 }
 
@@ -376,7 +446,9 @@ SDL_RenderClear(renderer);
     ground1.GroundRender(renderer);    // base
     p.Render(renderer);                // chim
     renderScore(700, 50);             // Score
+
     RenderSoundIcon(renderer);        //anh am thanh
+
 
      if (isGameOver) {
         renderGameOverScreen();
@@ -387,6 +459,9 @@ SDL_RenderClear(renderer);
     if (!gameStarted && !isGameOver) {
 
         SDL_RenderCopy(renderer, startTextTex, nullptr, &startButtonRect);
+        SDL_RenderCopy(renderer, HighScoreTex, nullptr, &HighScoreRect);
+        renderTopScores(renderer);
+
     }
 
     SDL_RenderPresent(renderer);
@@ -399,5 +474,7 @@ void GameLoop::Clear() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
         TTF_CloseFont(menuFont);
+        freeTopScores();
+
 
 }

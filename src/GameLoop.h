@@ -10,32 +10,9 @@
 
 class GameLoop
 {
-private:
-
-    Mix_Chunk* flapSound = nullptr;
-    Mix_Chunk* hitSound = nullptr;
-
-    SDL_Texture* soundOnTex = nullptr;
-    SDL_Texture* soundOffTex = nullptr;
-    SDL_Rect soundIconRect = {750, 10, 32, 32};
-
-    bool isMuted = false;
-
-    Player p;
-    Background b;
-    Background ground1;
-    const int HEIGHT = 600;
+    public:
+const int HEIGHT = 600;
     const int WIDTH = 800;
-    SDL_Window* window;
-    SDL_Event event1;
-    SDL_Renderer* renderer;
-    bool GameState = false;
-    Obstacle pipe1;
-    Obstacle pipe2;
-void loadDigitTextures();
-    void renderScore(int x, int y);
-public:
-
     void InitSounds(SDL_Renderer* renderer);
     void PlayFlapSound();
     void PlayHitSound();
@@ -60,5 +37,33 @@ bool getGameState();
     void checkCollision();
 
 
+private:
+
+    Mix_Chunk* flapSound = nullptr;
+    Mix_Chunk* hitSound = nullptr;
+
+    SDL_Texture* soundOnTex = nullptr;
+    SDL_Texture* soundOffTex = nullptr;
+    SDL_Rect soundIconRect = {750, 10, 32, 32};
+
+    bool isMuted = false;
+
+    Player p;
+    Background b;
+    Background ground1;
+
+    SDL_Window* window;
+    SDL_Event event1;
+    SDL_Renderer* renderer;
+    bool GameState = false;
+    Obstacle pipe1;
+    Obstacle pipe2;
+void loadDigitTextures();
+    void renderScore(int x, int y);
 
 };
+
+
+
+
+

@@ -32,7 +32,7 @@ x = startX;
 void Obstacle::update() {   // làm cho pipe chạy
     if(!GameLoop::gameStarted)return;
 
-    x -= PIPE_SPEED;   //trừ 3
+    x -= PIPE_SPEED;   //chạy màn vs vận tốc 3px/frame
 
 
     upperPipeRect = { x, 0, PIPE_WIDTH, y };// ống trên được tạo: tọa độ x (chiều ngang), tọa độ y = 0 (đỉnh trên cùng của màn), độ lớn ống, chiều cao là y
@@ -54,9 +54,9 @@ void Obstacle::loadTexture(SDL_Renderer* renderer) {
 void Obstacle::render(SDL_Renderer* renderer) {
 
     if (pipeTexture) {
-        SDL_RenderCopyEx(renderer, pipeTexture, nullptr, &upperPipeRect, 0, nullptr, SDL_FLIP_VERTICAL); // Pipe trên
+        SDL_RenderCopyEx(renderer, pipeTexture, nullptr, &upperPipeRect, 0, nullptr, SDL_FLIP_VERTICAL); // Pipe trên, sdl_flip_vertical để lật ảnh lên trên
         SDL_RenderCopy(renderer, pipeTexture, nullptr, &lowerPipeRect); // Pipe dưới
-    } else {
+    } else {  //test
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
         SDL_RenderFillRect(renderer, &upperPipeRect);
         SDL_RenderFillRect(renderer, &lowerPipeRect);

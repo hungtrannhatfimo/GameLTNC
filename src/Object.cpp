@@ -1,11 +1,11 @@
 #include"Object.h"
 
-SDL_Texture* Object::getTexture()
+SDL_Texture* Object::getTexture()   // texture (ảnh hiện ra trong game
 {
 	return Tex;
 }
 
-SDL_Rect& Object::getSrc()
+SDL_Rect& Object::getSrc()   // lay anh từ source
 {
 	return src;
 }
@@ -16,7 +16,7 @@ SDL_Rect& Object::getDest()
 }
 
 
-void Object::setSrc(int x, int y, int h, int w)
+void Object::setSrc(int x, int y, int w, int h)
 {
 	src.x = x;
 	src.y = y;
@@ -24,7 +24,7 @@ void Object::setSrc(int x, int y, int h, int w)
 	src.w = w;
 }
 
-void Object::setDest(int x, int y, int h, int w)
+void Object::setDest(int x, int y, int w, int h)
 {
 	dest.x = x;
 	dest.y = y;

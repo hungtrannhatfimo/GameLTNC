@@ -1,18 +1,17 @@
 #include"GameLoop.h"
 #include"Obstacle.h"
-GameLoop* g = new GameLoop();
 
 int main(int argc, char** argv)
 {
-
+GameLoop g;
 	double first;
 	double last = 0;
-	g->Initialize();
-	while (g->getGameState())
+	g.Initialize();
+	while (g.getGameState())
 	{
-		g->Event();
-		g->Update();
-		g->Render();
+		g.Event();
+		g.Update();
+		g.Render();
 		first = SDL_GetTicks();
 		if (first - last < 16.7)
 		{
@@ -20,11 +19,11 @@ int main(int argc, char** argv)
 		}
 		last = first;
 	}
-	g->Clear();
+	g.Clear();
 
 
 
-	delete g;
+
 	return 0;
 }
 
