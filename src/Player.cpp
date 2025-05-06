@@ -31,9 +31,9 @@ void Player::reset() {
     setSrc(0, 0, 32,24 );  // con chim lay ra tu anh
     setDest(25, HEIGHT / 3, 38,28 );  // con chim hien trong game
         inJump = false;
-    accelerator1 = 0;
-    accelerator2 = 0;
-    jumpHeight = -6;
+
+    accelerator = 0;
+    jumpHeight = -6;  //tốc độ bay
     Ypos = HEIGHT / 3;
     jumpTimer = 0;
     lastJump = 0;
@@ -45,10 +45,10 @@ void Player::Gravity()
 {
 	if (JumpState())
 	{
-		accelerator1 = accelerator1 + 0.035;
-		accelerator2 = accelerator2 + 0.035;
+
+		accelerator = accelerator + 0.07;
 		jumpHeight = jumpHeight + gravity;
-		Ypos = Ypos + gravity + accelerator1 + accelerator2 + jumpHeight;
+		Ypos = Ypos + gravity + accelerator + jumpHeight;
 		setDest(25, Ypos,38 , 28);
 		if (jumpHeight > 0)
 		{
@@ -59,9 +59,9 @@ void Player::Gravity()
 	else
 	{
 
-		accelerator1 = accelerator1 + 0.035;
-		accelerator2 = accelerator2 + 0.035;
-		Ypos = Ypos + gravity + accelerator1 + accelerator2;
+		accelerator = accelerator + 0.07;
+
+		Ypos = Ypos + gravity + accelerator;
 		setDest(25, Ypos, 38, 28);
 	}
 //	cerr << jumpHeight<< ", "<<Ypos<<endl;
@@ -72,8 +72,8 @@ void Player::Jump()
 {
 	if (jumpTimer - lastJump > 180)
 	{
-		accelerator1 = 0;
-		accelerator2 = 0;
+		accelerator = 0;
+
 		inJump = true;
 		lastJump = jumpTimer;
 	}

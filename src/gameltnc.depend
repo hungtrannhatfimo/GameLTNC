@@ -111,7 +111,7 @@
 1743605561 source:d:\ltnc\game\gameltnc\src\texturemanager.cpp
 	"TextureManager.h"
 
-1746260820 source:d:\ltnc\game\gameltnc(working)\src\background.cpp
+1746379811 source:d:\ltnc\game\gameltnc(working)\src\background.cpp
 	"Background.h"
 
 1743605561 d:\ltnc\game\gameltnc(working)\src\background.h
@@ -124,11 +124,11 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1746261454 source:d:\ltnc\game\gameltnc(working)\src\main.cpp
+1746379890 source:d:\ltnc\game\gameltnc(working)\src\main.cpp
 	"GameLoop.h"
 	"Obstacle.h"
 
-1746264870 d:\ltnc\game\gameltnc(working)\src\gameloop.h
+1746379888 d:\ltnc\game\gameltnc(working)\src\gameloop.h
 	<SDL.h>
 	<SDL_image.h>
 	<iostream>
@@ -138,7 +138,7 @@
 	"Obstacle.h"
 	<SDL_ttf.h>
 
-1744131043 d:\ltnc\game\gameltnc(working)\src\player.h
+1746547270 d:\ltnc\game\gameltnc(working)\src\player.h
 	"Object.h"
 	<iostream>
 	<vector>
@@ -147,16 +147,16 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1746260425 source:d:\ltnc\game\gameltnc(working)\src\object.cpp
+1746379811 source:d:\ltnc\game\gameltnc(working)\src\object.cpp
 	"Object.h"
 
-1746286814 source:d:\ltnc\game\gameltnc(working)\src\obstacle.cpp
+1746379811 source:d:\ltnc\game\gameltnc(working)\src\obstacle.cpp
 	"Obstacle.h"
 	<cstdlib>
 	<ctime>
 	"GameLoop.h"
 
-1746357449 source:d:\ltnc\game\gameltnc(working)\src\player.cpp
+1746379811 source:d:\ltnc\game\gameltnc(working)\src\player.cpp
 	"Player.h"
 	"TextureManager.h"
 	<iostream>
@@ -164,7 +164,7 @@
 1743605561 source:d:\ltnc\game\gameltnc(working)\src\texturemanager.cpp
 	"TextureManager.h"
 
-1746285214 source:d:\ltnc\game\gameltnc(working)\src\gameloop.cpp
+1746463611 source:d:\ltnc\game\gameltnc(working)\src\gameloop.cpp
 	"GameLoop.h"
 	"Obstacle.h"
 	<iostream>

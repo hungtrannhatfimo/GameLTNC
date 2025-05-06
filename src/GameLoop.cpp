@@ -283,7 +283,7 @@ void GameLoop::Initialize() {
 
     startTextTex = SDL_CreateTextureFromSurface(renderer, startSurface);
 
-        SDL_Surface* highscoreSurface = TTF_RenderText_Solid(menuFont, "HIGH SCORE: ", black);
+        SDL_Surface* highscoreSurface = TTF_RenderText_Solid(menuFont, "TOP 5 SCORES: ", black);
 
 HighScoreTex = SDL_CreateTextureFromSurface(renderer, highscoreSurface);
 loadTopScores(renderer, menuFont, "score.txt");
@@ -429,7 +429,8 @@ void GameLoop::renderGameOverScreen() {
     SDL_RenderCopy(renderer, gameOverTexture, nullptr, &dstRect); // anh gameover
 
     SDL_RenderCopy(renderer, restartButtonTexture, nullptr, &restartButtonRect); // nut restart
-        SDL_RenderCopy(renderer, HighScoreTex, nullptr, &HighScoreRect);
+    SDL_RenderCopy(renderer, HighScoreTex, nullptr, &HighScoreRect);
+    loadTopScores(renderer, menuFont, "score.txt");
 
     renderTopScores(renderer);
 
